@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List Web App</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0c2d48;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Container */
+    .container {
+      background-color: #f4f4f4;
+      border-radius: 8px;
+      padding: 20px;
+      width: 60%;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Title */
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    /* Form Section */
+    .task-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: none;
+    }
+
+    /* Save Button */
+    .save-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .save-btn:hover {
+      background-color: #218838;
+    }
+
+    /* Tasks Table */
+    .task-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .task-table th, .task-table td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .task-table th {
+      background-color: #004b6b;
+      color: #fff;
+    }
+
+    .task-table td {
+      background-color: #fff;
+      color: #333;
+    }
+
+    /* Delete Button */
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>To-Do List Web App</h1>
+
+    <!-- Task Input Form -->
+    <div class="task-form">
+      <input type="text" id="task-title" placeholder="Title" required />
+      <textarea id="task-desc" rows="4" placeholder="Description" required></textarea>
+      <button class="save-btn" onclick="addTask()">Save</button>
+    </div>
+
+    <!-- Tasks Table -->
+    <table class="task-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody id="task-list">
+        <!-- Task rows will be injected here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Function to add a new task
+    function addTask() {
+      const title = document.getElementById('task-title').value.trim();
+      const desc = document.getElementById('task-desc').value.trim();
+
+      if (!title || !desc) {
+        alert('Please fill out both fields!');
+        return;
+      }
+
+      const taskList = document.getElementById('task-list');
+
+      // Create a new row for the task
+      const row = document.createElement('tr');
+
+      row.innerHTML = `
+        <td>${title}</td>
+        <td>${desc}</td>
+        <td><button class="delete-btn" onclick="deleteTask(this)">X</button></td>
+      `;
+
+      taskList.appendChild(row);
+
+      // Clear the input fields
+      document.getElementById('task-title').value = '';
+      document.getElementById('task-desc').value = '';
+    }
+
+    // Function to delete a task
+    function deleteTask(button) {
+      const row = button.parentElement.parentElement;
+      row.remove();
+    }
+  </script>
+</body>
+</html>
